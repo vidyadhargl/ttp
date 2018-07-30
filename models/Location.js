@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
-
-var LocationSchema = new mongoose.Schema({
-	location: String,
+var Scheme = mongoose.Schema;
+var locationScheme = new Scheme({
+    location: String,
 	category: String,
-	imageURL: String
+    imageURL: String
 });
 
-mongoose.model('Location', LocationSchema);
+module.exports = mongoose.model('Location', locationScheme);
+

@@ -1,14 +1,12 @@
 var mongoose = require('mongoose');
 
 var InterestSchema = new mongoose.Schema({
-	location: String,
+	source: Object,
+	destination: Object,
 	email: String,
-	lat: String,
-	lang: String,
-	creationDate: String,
+	fromDate: String,
+	toDate: String,
 	status: Number,
-	city: String,
-	country: String
 });
 
 

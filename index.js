@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var mongoose = require('mongoose');
+var emailsender = require('./utils/emailsender.js')
     
 mongoose.connect("mongodb://localhost:27017/ttp");
 require('./models/Interest');

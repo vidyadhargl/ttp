@@ -37,7 +37,8 @@ router.get('/savelocations',function(req,res) {
 	    locations[i].save(function(err, result){
 	        done++;
 	        if(done === locations.length){
-	            console.log('added locations to db')
+				console.log('added locations to db')
+				res.send("added locations to db")
 	        }
 	    });
 	}

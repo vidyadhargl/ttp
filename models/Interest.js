@@ -6,7 +6,7 @@ var InterestSchema = new mongoose.Schema({
 	email: String,
 	fromDate: String,
 	toDate: String,
-	status: Number,
+	status: Number
 });
 
 

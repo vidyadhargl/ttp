@@ -9,7 +9,7 @@ router.get('/getlocationscount',function(req,res){
 	Interest.aggregate([
         {
             "$group": {
-                "_id": "$destination.name",
+                "_id": "$destination.city",
                 "count": { "$sum": 1 }
             }
         }

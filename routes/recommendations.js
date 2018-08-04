@@ -5,10 +5,16 @@ var CarRecosList = mongoose.model('CarRecos');
 var HotelRecosList = mongoose.model('HotelRecos');
 var RecosList = mongoose.model('Recos');
 var requestify = require('requestify'); 
+var mailsender = require('../utils/emailsender.js')
+var Interest = mongoose.model('Interest')
 
 var airrecos = '';
 var hotelrecos = '';
 var carrecos = '';
+
+router.get('/sendmail',function(req,res){
+  mailsender.sendEmail('URL_FOR_RECOS')
+});
 
 router.get('/getCars',function(req,res){
   CarRecosList.find(function(err,response){
@@ -47,42 +53,56 @@ router.post('/carRecos', function(req, res){
   });  
 });
 
-router.post('/getRecos', function(req, res){  
-  var InterestId = req.body.InterestId;
-  var source = req.body.source
-  var dest = req.body.dest;
-  var departure_date = req.body.departure_date;
-  var arrival_date = req.body.arrival_date; 
+//call this on attach reco
+router.get('/getRecos', function(req, res){  
+  var InterestId = req.params.id;
+  var source = "";
+  var dest = "";
+  var departure_date = "";
+  var arrival_date = "";
 
-  RecosList.find({ 'InterestId': InterestId }, function (err, interest) {
-    if (err) return handleError(err);
+  Interest.find({'_id': InterestId}, function(err,interest) {
     if(interest.length != 0) {
-      res.send(interest)
-    } 
-    else {
-      var res_count = 0;
-      getAirRecos(source,dest,departure_date,arrival_date,function(recos){
-        airrecos = recos;
-        res_count++;
-        console.log('received air recos');
-      });
+      source = interest.source;
+      dest = interest.destination;
+      departure_date = interest.fromDate;
+      arrival_date = interest.toDate;
 
-      getHotelRecos(dest,departure_date,arrival_date,function(recos){
-        hotelrecos = recos;
-        res_count++
-        console.log('received hotel recos');
-      });
+      RecosList.find({ 'InterestId': InterestId }, function (err, interest) {
+        if (err) return handleError(err);
+        if(interest.length != 0) {
+          res.send(interest)
+        } 
+        else {
+          var res_count = 0;
+          getAirRecos(source,dest,departure_date,arrival_date,function(recos){
+            airrecos = recos;
+            res_count++;
+            console.log('received air recos');
+          });
 
-      var interval = setInterval(function() {
-        console.log('waiting for response');
-        if(res_count == 2) {
-          saveRecos(InterestId,airrecos,hotelrecos,req,res)
-          clearInterval(interval)
+          getHotelRecos(dest,departure_date,arrival_date,function(recos){
+            hotelrecos = recos;
+            res_count++
+            console.log('received hotel recos');
+          });
+
+          var interval = setInterval(function() {
+            console.log('waiting for response');
+            if(res_count == 2) {
+              saveRecos(InterestId,airrecos,hotelrecos,req,res)
+              clearInterval(interval)
+            }
+          },2000);
         }
-      },2000);
-    }
-  })
+      });
+    } 
+  });
 });
+
+function getInterestFromId(InterestId) {
+
+}
 
 function getHotelRecos(destination, dep_date, arr_date, getHotelRecosCallback){
   var dest = destination;

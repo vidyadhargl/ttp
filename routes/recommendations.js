@@ -12,6 +12,19 @@ var airrecos = '';
 var hotelrecos = '';
 var carrecos = '';
 
+var iataCodes = {
+  'Amsterdam':'AMS',
+  'London':'LON',
+  'Bangalore':'BLR',
+  'Nice':'NCE',
+  'Toronto':'YYZ',
+  'Tokyo':'NRT',
+  'Berlin':'TXL',
+  'San Francisco':'SFO',
+  'Frankfurt':'FRA',
+  'Rome':'FCO'
+}
+
 router.get('/sendmail',function(req,res){
   mailsender.sendEmail(interestId)
 });
@@ -63,12 +76,13 @@ router.get('/getRecos/:id', function(req, res){
   var arrival_date = "";
 
   Interest.find({'_id': InterestId}, function(err,interest) {
+    console.log(interst[0])
     if (err) return handleError(err)
     if(interest.length != 0) {
-      source = interest.source;
-      dest = interest.destination;
-      departure_date = interest.fromDate;
-      arrival_date = interest.toDate;
+      source = iataCodes[interest[0].source.city];
+      dest = iataCodes[interest[0].destination.city];
+      departure_date = interest[0].fromDate;
+      arrival_date = interest[0].toDate;
 
       RecosList.find({ 'InterestId': InterestId }, function (err, interest) {
         if (err) return handleError(err);

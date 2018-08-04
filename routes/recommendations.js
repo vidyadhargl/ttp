@@ -13,7 +13,7 @@ var hotelrecos = '';
 var carrecos = '';
 
 router.get('/sendmail',function(req,res){
-  mailsender.sendEmail('URL_FOR_RECOS')
+  mailsender.sendEmail(interestId)
 });
 
 router.get('/getCars',function(req,res){
@@ -145,6 +145,7 @@ function saveRecos(InterestId, airrecos,hoterecos,req,res){
 
   recosList.save(function(err, result) {
     console.log("RECOS ADDED");
+    mailsender.sendEmail(InterestId)
     res.send(result);
   });
 }

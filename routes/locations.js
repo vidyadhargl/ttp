@@ -2,6 +2,7 @@
 var mongoose = require('mongoose');
 var router = require('express').Router();
 var Location = mongoose.model('Location');
+var Interests = mongoose.model('Interest');
 
 router.get('/savelocations',function(req,res) {
 	var locations = [
@@ -49,6 +50,14 @@ router.get('/getlocations',function(req,res){
 		function(err,response){
 			res.send(response)
 		})
+})
+
+router.get('/getInterests/:city',function(req,res){
+	console.log(req.params);
+	Interests.find({ 'destination.city': req.params.city }, function (err, response) {
+		if (err) res.send(err);
+		res.send(response);
+	  })
 })
 
 module.exports = router

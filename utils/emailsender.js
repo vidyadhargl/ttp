@@ -3,8 +3,8 @@ var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: '<useremail to authorize sending mails>',
-    pass: '<password>'
+    user: 'vid.lonarmath@gmail.com',
+    pass: 'aishwarya9'
   }
 });
 
@@ -12,8 +12,8 @@ module.exports = {
 	sendEmail(reco_link){
 		var reco_link = "http://www.google.com"
 		var mailOptions = {
-		  from: 'from_email_address',
-		  to: 'to_email_address',
+		  from: 'vid.lonarmath@gmail.com',
+		  to: 'vid.lonarmath@gmail.com',
 		  subject: 'Congratulations! You got recommendations.',
 		  html: '<h3>You have received recommendations for your travel interest.</h3><p>Please <a href="'+reco_link+'">Click here</a> to see recommendations.'
 		}; 

@@ -8,10 +8,10 @@ mongoose.connect("mongodb://localhost:27017/ttp");
 require('./models/Interest');
 require('./models/Location');
 require('./models/LocationCount');
-require('./models/AirReco');
 require('./models/AirRecosList');
 require('./models/CarRecos');
 require('./models/HotelRecos');
+require('./models/Recos');
 
 var interest = require('./routes/interests')
 var location = require('./routes/locations')

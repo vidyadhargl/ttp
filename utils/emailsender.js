@@ -9,8 +9,8 @@ var transporter = nodemailer.createTransport({
 });
 
 module.exports = {
-	sendEmail(reco_link){
-		var reco_link = "http://www.google.com"
+	sendEmail(interestId){
+		var reco_link = "http://172.22.184.95:4200/traveller-home/"+interestId
 		var mailOptions = {
 		  from: 'vid.lonarmath@gmail.com',
 		  to: 'vid.lonarmath@gmail.com',

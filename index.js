@@ -28,7 +28,7 @@ app.use('/locationCount',locationCount);
 app.use('/recos',recommendations);
 
 app.get('/',function(req,res){
-	res.send('hello TTP')
+	res.send('hello welcome to TTP')
 });
 
 app.listen('4000')

@@ -22,7 +22,8 @@ var iataCodes = {
   'Berlin':'TXL',
   'San Francisco':'SFO',
   'Frankfurt':'FRA',
-  'Rome':'FCO'
+  'Rome':'FCO',
+  'Paris': 'CDG'
 }
 
 router.get('/sendmail',function(req,res){
@@ -76,7 +77,7 @@ router.get('/getRecos/:id', function(req, res){
   var arrival_date = "";
 
   Interest.find({'_id': InterestId}, function(err,interest) {
-    console.log(interst[0])
+    console.log(interest[0])
     if (err) return handleError(err)
     if(interest.length != 0) {
       source = iataCodes[interest[0].source.city];
@@ -87,6 +88,7 @@ router.get('/getRecos/:id', function(req, res){
       RecosList.find({ 'InterestId': InterestId }, function (err, interest) {
         if (err) return handleError(err);
         if(interest.length != 0) {
+          mailsender.sendEmail(InterestId);
           res.send(interest)
         } 
         else {

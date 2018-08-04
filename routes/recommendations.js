@@ -54,7 +54,8 @@ router.post('/carRecos', function(req, res){
 });
 
 //call this on attach reco
-router.get('/getRecos', function(req, res){  
+router.get('/getRecos/:id', function(req, res){  
+  console.log('requst received for'+req.params.id)
   var InterestId = req.params.id;
   var source = "";
   var dest = "";
@@ -62,6 +63,7 @@ router.get('/getRecos', function(req, res){
   var arrival_date = "";
 
   Interest.find({'_id': InterestId}, function(err,interest) {
+    if (err) return handleError(err)
     if(interest.length != 0) {
       source = interest.source;
       dest = interest.destination;
@@ -100,8 +102,8 @@ router.get('/getRecos', function(req, res){
   });
 });
 
-function getInterestFromId(InterestId) {
-
+function handleError(err){
+  res.send({'Error':'Unable to fetch data'});
 }
 
 function getHotelRecos(destination, dep_date, arr_date, getHotelRecosCallback){

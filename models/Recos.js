@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 
 var RecosSchema = new mongoose.Schema({
-    id: String,
+    InterestId: String,
     AirRecos : {},
     HotelRecos : {} 
 });
